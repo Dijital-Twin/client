@@ -8,6 +8,7 @@ module.exports = {
       },
       colors: {
         "yellow-111": "#C6F432",
+        "yellow-222": "#485A0D",
         "white-900": "#CDD4F0",
         "dark-900": "#010101"
       },

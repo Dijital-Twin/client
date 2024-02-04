@@ -16,7 +16,9 @@ export default function Navbar() {
                 <a className={"text-sm"}>
                     Contact
                 </a>
-                <a className={"text-sm"}>
+                <a className={"text-sm"}
+                   href={"/login"}
+                >
                     Log in
                 </a>
             </div>
