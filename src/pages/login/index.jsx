@@ -26,7 +26,7 @@ export default function Login() {
                     Login
                 </button>
             </div>
-            <div className={'absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[60%] mt-10'}>
+            <div className={'absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[60%] mt-10 pointer-events-none'}>
                 <img src={'/pattern.svg'}
                      className={'-rotate-2'}
                      alt={"pattern"}

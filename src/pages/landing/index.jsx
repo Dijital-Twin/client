@@ -23,7 +23,7 @@ export default function Landing() {
                      Find your perfect virtual partner or friend through our innovative platform. Experience meaningful connections with AI-powered personalities. Explore the world of Soulmate AI today.
                 </span>
             </div>
-            <div className={"mt-10"}>
+            <div className={"mt-10 mb-10"}>
                 <a className={"bg-white px-10 py-3 rounded-lg font-semibold"}>
                     Get Started
                 </a>
