@@ -1,6 +1,6 @@
 export default function Navbar() {
     return (
-        <div className={'flex flex-row justify-between border-b border-opacity-30 border-white px-40 py-4'}>
+        <div className={'flex flex-row justify-between border-b border-opacity-30 border-white px-40 py-4 max-w-1250p mx-auto'}>
             <div className={'text-white text-lg'}>
                 <a href={"/"}>
                     <h1>
