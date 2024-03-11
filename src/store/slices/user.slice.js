@@ -9,9 +9,7 @@ const userSlice = createSlice({
         profile_pic: '',
     },
     reducers: {
-        changeUser: (state, action) => {
-            state.general = action.payload
-        },
+        changeUser: (state, action) => ({ ...state, ...action.payload }),
     },
 })
 

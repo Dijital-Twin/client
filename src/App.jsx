@@ -4,23 +4,25 @@ import Navbar from "./components/Navbar.jsx";
 import Landing from "./pages/landing/index.jsx";
 import ScrollToTop from './components/ScrollToTop.jsx'
 import './styles/output.css'
-import Login from './pages/login/index.jsx'
+import { useAuthToken } from './utils/authservice.js';
 import My from './pages/my/index.jsx'
 
 function App() {
-  return (
-      <BrowserRouter>
-          <ScrollToTop />
-          <Toaster />
-          <Navbar />
-          <Routes>
-              <Route path='/' element={<Landing />} />
-              <Route path='login' element={<Login />} />
-              <Route path='my' element={<My />} />
+
+    useAuthToken();
+
+    return (
+        <BrowserRouter>
+            <ScrollToTop />
+            <Toaster />
+            <Navbar />
+            <Routes>
+                <Route path='/' element={<Landing />} />
+                <Route path='my' element={<My />} />
           </Routes>
-          {/*<Footer />*/}
-      </BrowserRouter>
-  )
+            {/*<Footer />*/}
+        </BrowserRouter>
+    )
 }
 
 export default App
