@@ -4,8 +4,9 @@ const userSlice = createSlice({
     name: 'user',
     initialState: {
         id: -1,
+        fullname: '',
         username: '',
-        bio: '',
+        email: '',
         profile_pic: '',
     },
     reducers: {

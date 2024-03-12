@@ -20,8 +20,9 @@ const useAuthToken = () => {
         getToken();
         
         if (isAuthenticated) {
-            const { sub, email, name, picture } = user;
-            dispatch(changeUser({ id: sub, username: name, bio: email, profile_pic: picture }));
+            const { nickname, name, middle_name, family_name, email, picture, sub } = user;
+            const fullname = `${name ?? ''} ${middle_name ?? ''} ${family_name ?? ''}`.replace(/\s+/g, ' ').trim();
+            dispatch(changeUser({ id: sub, fullname: fullname, username: nickname, email, profile_pic: picture }));
         }
 
     }, [isAuthenticated, getAccessTokenSilently, dispatch, user]);
