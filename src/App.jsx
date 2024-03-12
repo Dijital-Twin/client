@@ -1,15 +1,15 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import {Toaster} from "react-hot-toast";
-import Navbar from "./components/Navbar.jsx";
-import Landing from "./pages/landing/index.jsx";
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
+import Navbar from './components/Navbar.jsx'
+import Landing from './pages/landing/index.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import './styles/output.css'
-import { useAuthToken } from './utils/authservice.js';
+import { useAuthToken } from './utils/authservice.js'
 import My from './pages/my/index.jsx'
+import AI from './pages/ai/index.jsx'
 
 function App() {
-
-    useAuthToken();
+    useAuthToken()
 
     return (
         <BrowserRouter>
@@ -17,10 +17,11 @@ function App() {
             <Toaster />
             <Navbar />
             <Routes>
-                <Route path='/' element={<Landing />} />
-                <Route path='my' element={<My />} />
-          </Routes>
-            {/*<Footer />*/}
+                <Route path="/" element={<Landing />} />
+                <Route path="ai" element={<AI />} />
+                <Route path="my" element={<My />} />
+                {/* <Route path='login' element={<Login />} /> */}
+            </Routes>
         </BrowserRouter>
     )
 }
