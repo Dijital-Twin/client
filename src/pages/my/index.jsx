@@ -7,11 +7,11 @@ import CreateIcon from '../../assets/icons/create.svg'
 import ConversationIcon from '../../assets/icons/conversation.svg'
 
 function Card(props) {
-    const { text, href, background, col, row, fontSize, Icon } = props
+    const { text, href, background, col, row, fontSize, Icon, shadow } = props
 
     return (
         <div
-            className={`flex flex-col justify-between w-full z-50 whitespace-pre text-${fontSize} p-2 rounded-2xl w-full`}
+            className={`flex flex-col justify-between w-full z-50 whitespace-pre text-${fontSize} p-2 rounded-2xl w-full ${shadow} `}
             style={{ fontSize: fontSize, backgroundColor: background, gridColumn: col, gridRow: row }}
         >
             <div className={'flex flex-row justify-between '}>
@@ -36,10 +36,11 @@ export default function My() {
                         col={'1 / span 1'}
                         row={'1 / span 2'}
                         background={'#C6F432'}
-                        Icon={<SpeakIcon fill={'#0a0a0a'} strokeWidth={"0px"}/>}
+                        Icon={<SpeakIcon fill={'#0a0a0a'} strokeWidth={"0px"} />}
+                        shadow={'shadow-yellow'}
                     />
-                    <Card text={'Chat with\nRachel'} col={'2 / span 1'} row={'1 / span 1'} background={'#C09FF8'} key={'a'} Icon={<ConversationIcon size={24} stroke={'#0a0a0a'} />} />
-                    <Card text={'Create new\nPersona'} col={'2 / span 1'} row={'2 / span 1'} background={'#FEC4DD'} key={'asss'} Icon={<CreateIcon size={24} stroke={'#0a0a0a'}/>} />
+                    <Card text={'Chat with\nRachel'} col={'2 / span 1'} row={'1 / span 1'} background={'#C09FF8'} key={'a'} Icon={<ConversationIcon size={24} stroke={'#0a0a0a'} />} shadow={'shadow-purple'} />
+                    <Card text={'Create new\nPersona'} col={'2 / span 1'} row={'2 / span 1'} background={'#FEC4DD'} key={'asss'} Icon={<CreateIcon size={24} stroke={'#0a0a0a'} />} shadow={'shadow-pink'} />
                 </div>
             </div>
             <div className={'absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[60%] mt-10 pointer-events-none'}>
