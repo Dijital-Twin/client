@@ -7,6 +7,7 @@ import './styles/output.css'
 import { useAuthToken } from './utils/authservice.js'
 import My from './pages/my/index.jsx'
 import AI from './pages/ai/index.jsx'
+import Talk from './pages/talk/index.jsx'
 
 function App() {
     useAuthToken()
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/" element={<Landing />} />
                 <Route path="ai" element={<AI />} />
                 <Route path="my" element={<My />} />
+                <Route path="talk" element={<Talk />} />
                 {/* <Route path='login' element={<Login />} /> */}
             </Routes>
         </BrowserRouter>
