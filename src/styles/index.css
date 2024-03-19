@@ -18,3 +18,18 @@ body {
 ::-webkit-scrollbar-track {
     background-color: #010101;
 }
+
+.neon-border-wrapper {
+    background-color: black;
+    /* padding: 0px; */
+    border-radius: 10px;
+    box-shadow:
+        0 0 3px #070707,
+        0 0 10px #d9ff00,
+        0 0 20px #d9ff00,
+        0 0 30px #d9ff00;
+}
+
+#neonCanvas {
+    border-radius: 18px;
+}

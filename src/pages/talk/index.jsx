@@ -58,8 +58,8 @@ const AudioEffect = ({ audioBuffer }) => {
 
     useEffect(() => {
         const canvas = canvasRef.current
-        canvas.width = window.innerWidth
-        canvas.height = window.innerHeight
+        canvas.width = window.innerWidth * 0.6
+        canvas.height = 50
         const ctx = canvas.getContext('2d')
 
         const drawVisualization = () => {
@@ -67,7 +67,19 @@ const AudioEffect = ({ audioBuffer }) => {
             ctx.fillStyle = 'rgb(0, 0, 0)'
             ctx.fillRect(0, 0, canvas.width, canvas.height)
 
+            const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+
+            grad.addColorStop(0, `hsl(69, 90%, 32%)`);
+            grad.addColorStop(0.5, `hsl(69, 90%, 66%)`);
+            grad.addColorStop(1, `hsl(69, 90%, 16%)`);
+
+            ctx.strokeStyle = grad;
+
+            ctx.shadowBlur = 100;
+            ctx.shadowColor = `hsl(69, 90%, 66%)`;
+
             if (analyser) {
+                canvas.style.display = 'block'
                 const bufferLength = analyser.frequencyBinCount
                 const dataArray = new Uint8Array(bufferLength)
                 analyser.getByteFrequencyData(dataArray)
@@ -76,22 +88,47 @@ const AudioEffect = ({ audioBuffer }) => {
                 let x = 0
 
                 for (let i = 0; i < bufferLength; i++) {
-                    barHeight = dataArray[i]
-                    ctx.fillStyle = `rgb(${barHeight + 100}, 50, 50)`
+                    let normalizedHeight = dataArray[i] / 255
+                    normalizedHeight = Math.pow(normalizedHeight, 0.6);
+                    barHeight = normalizedHeight * canvas.height;
+                    ctx.fillStyle = `hsl(69, 90%, 66%)`
                     ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2)
 
-                    x += barWidth + 1
+                    x += barWidth + 2
                 }
             } else {
                 ctx.fillStyle = 'rgb(255, 255, 255)'
                 ctx.font = '16px Arial'
+                canvas.style.display = 'none'
             }
         }
 
         drawVisualization()
     }, [analyser])
 
-    return <canvas ref={canvasRef} />
+    return <div className="neon-border-wrapper"><canvas id='neonCanvas' ref={canvasRef} /></div>
+}
+function Typewriter({ text, typingDelay = 100, speaker }) {
+    const [displayedText, setDisplayedText] = useState('');
+    console.log(text);
+    useEffect(() => {
+        if (speaker === 'User') {
+            setDisplayedText(text);
+        } else {
+            let charIndex = 0;
+            const timer = setInterval(() => {
+                setDisplayedText((prev) => prev + text[charIndex]);
+                charIndex++;
+                if (charIndex === text.length - 1) {
+                    clearInterval(timer);
+                }
+            }, typingDelay);
+
+            return () => clearInterval(timer);
+        }
+    }, [text, typingDelay, speaker]);
+
+    return <span>{displayedText}</span>;
 }
 
 function Conversation(props) {
@@ -99,7 +136,7 @@ function Conversation(props) {
 
     return (
         <div className={'bg-yellow-111 w-1/3 rounded-md px-2 py-1'} style={{ marginLeft: speaker === 'User' ? 'auto' : 0 }}>
-            <p>{text}</p>
+            <Typewriter text={text} typingDelay={50} speaker={speaker} />
         </div>
     )
 }
@@ -132,6 +169,9 @@ export default function Talk() {
 
     return (
         <Layout>
+            <div className='absolute left-1/2 -translate-x-1/2 bottom-0 -translate-y-1/2 pointer-events-none z-50'>
+                <AudioEffect audioBuffer={currentAudio} />
+            </div>
             <div className={'flex flex-col justify-between w-full h-[85vh]'}>
                 <div className={'flex flex-col space-y-2 h-[80vh] overflow-y-scroll w-2/3 mx-auto'}>
                     {conversations.map((conversation, i) => (
@@ -139,7 +179,6 @@ export default function Talk() {
                     ))}
                 </div>
                 <div className={'flex flex-col mt-2 w-2/3 mx-auto'}>
-                    <AudioEffect audioBuffer={currentAudio} />
 
                     <GrowableTextarea
                         className={
