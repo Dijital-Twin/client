@@ -1,8 +1,9 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import SendIcon from '../../assets/icons/send.svg'
 
 export default function GrowableTextarea({ className, ...props }) {
     const textareaRef = useRef(null)
+    const [text, setText] = useState('');
     const { onSend, onInput } = props
 
     useEffect(() => {
@@ -14,6 +15,7 @@ export default function GrowableTextarea({ className, ...props }) {
     }, [])
 
     const handleInput = (e) => {
+        setText(e.target.value);
         if (onInput) {
             onInput(e)
         }
@@ -27,12 +29,12 @@ export default function GrowableTextarea({ className, ...props }) {
             textarea.style.height = `${textarea.scrollHeight}px`
         }
     }
-
     return (
         <div className="flex flex-row items-end relative">
-            <textarea ref={textareaRef} onInput={handleInput} className={className} {...props} />
+            <textarea value={text} ref={textareaRef} onInput={handleInput} className={className} {...props} />
             <button
-                className=" right-0 bottom-0 h-full w-16 rounded-r-md bg-yellow-111 max-h-[4vh]"
+                disabled={!text}
+                className=" right-0 bottom-0 h-full w-16 rounded-r-md bg-yellow-111 max-h-[4vh] disabled:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-70 hover:opacity-80"x
                 onClick={() => {
                     onSend(textareaRef)
                     textareaRef.current.value = ''

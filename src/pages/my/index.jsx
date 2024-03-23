@@ -11,7 +11,7 @@ function Card(props) {
 
     return (
         <div
-            className={`flex flex-col justify-between w-full z-50 whitespace-pre text-${fontSize} p-2 rounded-2xl w-full ${shadow} `}
+            className={`flex flex-col justify-between w-full z-50 whitespace-pre text-${fontSize} p-2 rounded-2xl w-full ${shadow} hover:scale-105 transition-transform duration-500 ease-in-out hover:cursor-pointer`}
             style={{ fontSize: fontSize, backgroundColor: background, gridColumn: col, gridRow: row }}
         >
             <div className={'flex flex-row justify-between '}>
