@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import Layout from '../../components/Layout.jsx'
 import GrowableTextarea from '../../components/input/GrowableTextarea.jsx'
 import { sendToGpt, sendToXtts } from '../../api/v1/index.js'
+import {ThreeDots} from 'react-loading-icons'
 
 const AudioEffect = ({ audioBuffer }) => {
     const canvasRef = useRef(null)
@@ -144,16 +145,17 @@ function Conversation(props) {
 export default function Talk() {
     const [conversations, setConversation] = useState([{ speaker: 'Rachel', text: 'Hi. I am Rachel Green.' }])
     const [currentAudio, setCurrentAudio] = useState(null)
+    const [waitingResponse, setWaitingResponse] = useState(false)
 
     const onSend = (element) => {
         if (element) {
+            setWaitingResponse(true);
             const newChat = {
                 speaker: 'User',
                 text: element.current.value,
             }
             const newConversations = [...conversations, newChat]
             setConversation(newConversations)
-
             sendToGpt(newConversations).then((response) => {
                 const newChat = {
                     speaker: 'Rachel',
@@ -162,8 +164,12 @@ export default function Talk() {
                 sendToXtts(response).then((audio) => {
                     setConversation((prevConversations) => [...prevConversations, newChat])
                     setCurrentAudio(audio)
+                    setWaitingResponse(false);
                 })
-            })
+            }).catch(error => {
+                console.error("An error occurred:", error);
+                setIsLoading(false);
+            });
         }
     }
 
@@ -177,6 +183,7 @@ export default function Talk() {
                     {conversations.map((conversation, i) => (
                         <Conversation key={i} text={conversation.text} speaker={conversation.speaker} />
                     ))}
+                    { waitingResponse && <ThreeDots width={50} fill='#d9ff00' speed={.30}/> }
                 </div>
                 <div className={'flex flex-col mt-2 w-2/3 mx-auto'}>
 
