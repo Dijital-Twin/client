@@ -20,16 +20,13 @@ export default function Navbar() {
     }
 
     return (
-        <div className={'flex flex-row justify-between border-b border-opacity-30 border-white px-40 py-4 max-w-1250p mx-auto'}>
+        <div className={'flex flex-row justify-between border-b border-opacity-30 border-white px-5 md:px-20 lg:px-40 py-4 max-w-1250p mx-auto'}>
             <div className={'text-white text-lg'}>
                 <a href={'/'}>
                     <h1>DIGITAL TWIN</h1>
                 </a>
             </div>
             <div className={'flex flex-row items-center uppercase space-x-14 text-white-900'}>
-                <a className={'text-sm'}>About us</a>
-                <a className={'text-sm'}>Characters</a>
-                <a className={'text-sm'}>Contact</a>
                 {!isAuthenticated ? (
                     <button onClick={() => loginWithRedirect()} className="text-sm uppercase">
                         Log in

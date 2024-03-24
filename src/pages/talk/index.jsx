@@ -41,13 +41,13 @@ export default function Talk() {
     return (
         <Layout>
             <div className={'flex flex-col justify-between w-full h-[85vh]'}>
-                <div className={'flex flex-col space-y-2 h-[80vh] overflow-y-scroll w-2/3 mx-auto'}>
+                <div className={'flex flex-col space-y-2 h-[80vh] overflow-y-scroll w-full px-4 mx-auto'}>
                     {conversations.map((conversation, i) => (
                         <Conversation key={i} text={'  ' + conversation.text} speaker={conversation.speaker} />
                     ))}
                     {waitingResponse && <ThreeDots width={50} fill="#d9ff00" speed={0.3} />}
                 </div>
-                <div className={'flex flex-col mt-6 w-2/3 mx-auto'}>
+                <div className={'flex flex-col mt-6 w-full md:w-2/3 mx-auto'}>
                     <GrowableTextarea
                         className={
                             'w-full border border-gray-400 bg-gray-800 rounded-md rounded-r-none px-2 py-1 h-fit text-gray-200 resize-none focus:outline-none overflow-hidden max-h-[20vh] min-h-[4vh]'
