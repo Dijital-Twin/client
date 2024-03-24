@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import Layout from '../../components/Layout.jsx'
 import GrowableTextarea from '../../components/input/GrowableTextarea.jsx'
 import { sendToGpt, sendToXtts } from '../../api/v1/index.js'
-import {ThreeDots} from 'react-loading-icons'
+import { ThreeDots } from 'react-loading-icons'
 
 const AudioEffect = ({ audioBuffer }) => {
     const canvasRef = useRef(null)
@@ -68,16 +68,16 @@ const AudioEffect = ({ audioBuffer }) => {
             ctx.fillStyle = 'rgb(0, 0, 0)'
             ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-            const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            const grad = ctx.createLinearGradient(0, 0, 0, canvas.height)
 
-            grad.addColorStop(0, `hsl(69, 90%, 32%)`);
-            grad.addColorStop(0.5, `hsl(69, 90%, 66%)`);
-            grad.addColorStop(1, `hsl(69, 90%, 16%)`);
+            grad.addColorStop(0, `hsl(69, 90%, 32%)`)
+            grad.addColorStop(0.5, `hsl(69, 90%, 66%)`)
+            grad.addColorStop(1, `hsl(69, 90%, 16%)`)
 
-            ctx.strokeStyle = grad;
+            ctx.strokeStyle = grad
 
-            ctx.shadowBlur = 100;
-            ctx.shadowColor = `hsl(69, 90%, 66%)`;
+            ctx.shadowBlur = 100
+            ctx.shadowColor = `hsl(69, 90%, 66%)`
 
             if (analyser) {
                 canvas.style.display = 'block'
@@ -90,8 +90,8 @@ const AudioEffect = ({ audioBuffer }) => {
 
                 for (let i = 0; i < bufferLength; i++) {
                     let normalizedHeight = dataArray[i] / 255
-                    normalizedHeight = Math.pow(normalizedHeight, 0.6);
-                    barHeight = normalizedHeight * canvas.height;
+                    normalizedHeight = Math.pow(normalizedHeight, 0.6)
+                    barHeight = normalizedHeight * canvas.height
                     ctx.fillStyle = `hsl(69, 90%, 66%)`
                     ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2)
 
@@ -107,29 +107,33 @@ const AudioEffect = ({ audioBuffer }) => {
         drawVisualization()
     }, [analyser])
 
-    return <div className="neon-border-wrapper"><canvas id='neonCanvas' ref={canvasRef} /></div>
+    return (
+        <div className="neon-border-wrapper">
+            <canvas id="neonCanvas" ref={canvasRef} />
+        </div>
+    )
 }
 function Typewriter({ text, typingDelay = 100, speaker }) {
-    const [displayedText, setDisplayedText] = useState('');
-    console.log(text);
+    const [displayedText, setDisplayedText] = useState('')
+    console.log(text)
     useEffect(() => {
         if (speaker === 'User') {
-            setDisplayedText(text);
+            setDisplayedText(text)
         } else {
-            let charIndex = 0;
+            let charIndex = 0
             const timer = setInterval(() => {
-                setDisplayedText((prev) => prev + text[charIndex]);
-                charIndex++;
+                setDisplayedText((prev) => prev + text[charIndex])
+                charIndex++
                 if (charIndex === text.length - 1) {
-                    clearInterval(timer);
+                    clearInterval(timer)
                 }
-            }, typingDelay);
+            }, typingDelay)
 
-            return () => clearInterval(timer);
+            return () => clearInterval(timer)
         }
-    }, [text, typingDelay, speaker]);
+    }, [text, typingDelay, speaker])
 
-    return <span>{displayedText}</span>;
+    return <span>{displayedText}</span>
 }
 
 function Conversation(props) {
@@ -149,44 +153,44 @@ export default function Talk() {
 
     const onSend = (element) => {
         if (element) {
-            setWaitingResponse(true);
+            setWaitingResponse(true)
             const newChat = {
                 speaker: 'User',
                 text: element.current.value,
             }
             const newConversations = [...conversations, newChat]
             setConversation(newConversations)
-            sendToGpt(newConversations).then((response) => {
-                const newChat = {
-                    speaker: 'Rachel',
-                    text: response,
-                }
-                sendToXtts(response).then((audio) => {
-                    setConversation((prevConversations) => [...prevConversations, newChat])
-                    setCurrentAudio(audio)
-                    setWaitingResponse(false);
+            sendToGpt(newConversations)
+                .then((response) => {
+                    const newChat = {
+                        speaker: 'Rachel',
+                        text: response,
+                    }
+                    sendToXtts(response).then((audio) => {
+                        setConversation((prevConversations) => [...prevConversations, newChat])
+                        setCurrentAudio(audio)
+                        setWaitingResponse(false)
+                    })
                 })
-            }).catch(error => {
-                console.error("An error occurred:", error);
-                setIsLoading(false);
-            });
+                .catch((error) => {
+                    console.error('An error occurred:', error)
+                })
         }
     }
 
     return (
         <Layout>
-            <div className='absolute left-1/2 -translate-x-1/2 bottom-0 -translate-y-1/2 pointer-events-none z-50'>
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-0 -translate-y-1/2 pointer-events-none z-50">
                 <AudioEffect audioBuffer={currentAudio} />
             </div>
             <div className={'flex flex-col justify-between w-full h-[85vh]'}>
                 <div className={'flex flex-col space-y-2 h-[80vh] overflow-y-scroll w-2/3 mx-auto'}>
                     {conversations.map((conversation, i) => (
-                        <Conversation key={i} text={conversation.text} speaker={conversation.speaker} />
+                        <Conversation key={i} text={'  ' + conversation.text} speaker={conversation.speaker} />
                     ))}
-                    { waitingResponse && <ThreeDots width={50} fill='#d9ff00' speed={.30}/> }
+                    {waitingResponse && <ThreeDots width={50} fill="#d9ff00" speed={0.3} />}
                 </div>
-                <div className={'flex flex-col mt-2 w-2/3 mx-auto'}>
-
+                <div className={'flex flex-col mt-6 w-2/3 mx-auto'}>
                     <GrowableTextarea
                         className={
                             'w-full border border-gray-400 bg-gray-800 rounded-md rounded-r-none px-2 py-1 h-fit text-gray-200 resize-none focus:outline-none overflow-hidden max-h-[20vh] min-h-[4vh]'

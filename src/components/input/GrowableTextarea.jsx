@@ -37,7 +37,7 @@ export default function GrowableTextarea({ className, ...props }) {
                 className=" right-0 bottom-0 h-full w-16 rounded-r-md bg-yellow-111 max-h-[4vh] disabled:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-70 hover:opacity-80"x
                 onClick={() => {
                     onSend(textareaRef)
-                    textareaRef.current.value = ''
+                    textareaRef.current.value = ""
                 }}
                 aria-label="Send message"
             >
