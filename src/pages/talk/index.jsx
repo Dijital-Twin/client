@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useState } from 'react'
 import Layout from '../../components/Layout.jsx'
 import GrowableTextarea from '../../components/input/GrowableTextarea.jsx'
 import { sendToXtts, sendToPipeline } from '../../api/v1/index.js'
@@ -40,9 +40,6 @@ export default function Talk() {
 
     return (
         <Layout>
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-0 -translate-y-1/2 pointer-events-none z-50">
-                <AudioEffect audioBuffer={currentAudio} />
-            </div>
             <div className={'flex flex-col justify-between w-full h-[85vh]'}>
                 <div className={'flex flex-col space-y-2 h-[80vh] overflow-y-scroll w-2/3 mx-auto'}>
                     {conversations.map((conversation, i) => (
