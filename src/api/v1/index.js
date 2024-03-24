@@ -4,8 +4,26 @@ axios.defaults.baseURL = `${import.meta.env.VITE_BACKEND_URL}/` ?? 'http://local
 
 export async function sendToGpt(messages) {
     const stringifiedMessages = JSON.stringify(messages)
-    console.log('stringifiedMessages', stringifiedMessages)
+
     const response = await axios.post('ai/', { context: stringifiedMessages })
+
+    if (response.data.status !== 'success') {
+        throw new Error('Failed to send message to Mistral')
+    }
+
+    return response.data.data
+}
+
+export async function sendToPipeline(messages) {
+    const response = await axios.post('ai/pipeline',
+        {
+            context: messages[messages.length - 1].text,
+            previousConversation: messages.map(message => ({
+                role: message.speaker === 'Rachel' ? 'assistant' : 'user',
+                content: message.text,
+            })),
+        },
+    )
 
     if (response.data.status !== 'success') {
         throw new Error('Failed to send message to Mistral')

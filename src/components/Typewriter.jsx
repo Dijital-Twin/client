@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 export default function Typewriter(props) {
     const { text, typingDelay, speaker } = props
 
-    const [displayedText, setDisplayedText] = useState(() => '')
+    const [displayedText, setDisplayedText] = useState('')
 
     useEffect(() => {
         if (speaker === 'User') {
