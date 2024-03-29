@@ -1,5 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 function ProfileNavbar() {
     const user = useSelector((state) => state.user)
@@ -27,6 +28,7 @@ export default function Navbar() {
                 </a>
             </div>
             <div className={'flex flex-row items-center uppercase space-x-14 text-white-900'}>
+                <Link to={'/my'}>Home</Link>
                 {!isAuthenticated ? (
                     <button onClick={() => loginWithRedirect()} className="text-sm uppercase">
                         Log in

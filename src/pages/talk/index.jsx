@@ -41,7 +41,7 @@ export default function Talk() {
     return (
         <Layout>
             <div className={'flex flex-col justify-between w-full h-[85vh]'}>
-                <div className={'flex flex-col space-y-2 h-[80vh] overflow-y-scroll w-full px-4 mx-auto'}>
+                <div className={'flex flex-col space-y-2 h-[80vh] overflow-y-scroll w-full md:w-2/3 px-4 mx-auto'}>
                     {conversations.map((conversation, i) => (
                         <Conversation key={i} text={'  ' + conversation.text} speaker={conversation.speaker} />
                     ))}
